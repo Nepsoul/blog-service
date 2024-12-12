@@ -47,22 +47,21 @@ pipeline {
                 sh '''
                     docker build -t magarp0723/blog-service .
                     docker compose up -d
-                    curl localhost:8081
                 '''
             }
         }
 
-        // stage('Push Image') {
-        //     steps {
-        //         echo 'Building..'
-        //             withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
-        //                 sh "docker login -u ${USERNAME} -p ${PASSWORD}"
-        //                 sh "docker tag magarp0723/2244_ica2 magarp0723/2244_ica2:${TAG_DYNAMIC}"
-        //                 sh "docker push magarp0723/2244_ica2:${TAG_DYNAMIC}"
-        //                 sh "docker push magarp0723/2244_ica2"
-        //             }
-        //     }
-        // }
+        stage('Push Image') {
+            steps {
+                echo 'Building..'
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                        sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+                        sh "docker tag magarp0723/2244_ica2 magarp0723/blog-service:${TAG_DYNAMIC}"
+                        sh "docker push magarp0723/blog-service:${TAG_DYNAMIC}"
+                        sh "docker push magarp0723/blog-service"
+                    }
+            }
+        }
 
         stage('Image push completed'){
             steps {
