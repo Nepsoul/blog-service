@@ -38,7 +38,7 @@ pipeline {
         stage('Deploy container into App server') {
 
             steps {
-                sshagent(['ssh-key']) {
+                sshagent(['remote-credential']){
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                         sh '''
                             ssh -tt saroj@57.151.98.41 -o StrictHostKeyChecking=no "docker pull magarp0723/blog-service"
