@@ -15,7 +15,6 @@ const {
 
 let token, firstBlog;
 beforeEach(async () => {
-  jest.setTimeout(50000);
   const initVariable = await initialTestFunc();
   token = initVariable.token;
   firstBlog = initVariable.newBlogId._id.toString();
@@ -48,7 +47,6 @@ describe("adding a new blog", () => {
 });
 
 describe("validation testing for blogs", () => {
-  jest.setTimeout(10000);
   test("verify request object with no likes keyword adds likes to 0", async () => {
     const response = await api
       .post("/api/blogs")

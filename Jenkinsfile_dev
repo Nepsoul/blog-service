@@ -25,10 +25,7 @@ pipeline {
 
         stage('Run Application') {
             steps {
-            nohupWrapper {
-                sh 'npm run start:test'
-            }
-            sh 'sleep 10'
+            sh 'nohup npm run start:test &'
             sh 'npm run test'
             }
         }
