@@ -42,7 +42,7 @@ pipeline {
                     withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
                         sh '''
                             ssh -tt admin@3.91.46.89 -o StrictHostKeyChecking=no "docker pull magarp0723/blog-service"
-                            ssh -tt admin@3.91.46.89 -o StrictHostKeyChecking=no "docker run -d --name my-app-container --network app-network -e SECRET_KEY="appleisred" -e PORT=3003 -e MONGO_URL="mongodb://mongo:27017/blogservice-db" -e NODE_ENV=dev -p 8082:3003 magarp0723/blog-service"
+                            ssh -tt admin@3.91.46.89 -o StrictHostKeyChecking=no "docker run -d --name blog-service --network app-network -e SECRET_KEY="appleisred" -e PORT=3003 -e MONGO_URL="mongodb://mongo:27017/blogservice-db" -e NODE_ENV=dev -p 8082:3003 magarp0723/blog-service"
                             ssh -tt admin@3.91.46.89 -o StrictHostKeyChecking=no "docker run -d --name mongo --network app-network -p 27017:27017 -v mongo-data:/data/db mongo"
                         '''
                     }
