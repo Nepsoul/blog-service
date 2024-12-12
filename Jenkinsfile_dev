@@ -45,7 +45,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 sh '''
-                    docker build -t ${env.dockerhub_username}/${env.docker_image} .
+                    docker build -t magarp0723/blog-service .
                     docker-compose up -d
                     curl -I localhost:8081
                 '''
