@@ -11,7 +11,7 @@
     "ecmaVersion": "latest"
   },
   "rules": {
-    "no-console":"warn",
+    // "no-console":"warn",
     "quotes": [1, "double",{"allowTemplateLiterals":true}],
     "eqeqeq":"warn",
     "no-var":"error"
