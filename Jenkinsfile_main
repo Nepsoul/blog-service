@@ -28,6 +28,7 @@ pipeline {
         stage('Create Container and Test'){
             steps {
                 sh '''
+                    docker images
                     docker compose up -d
                     echo "Container Up and Running..."
                 '''
