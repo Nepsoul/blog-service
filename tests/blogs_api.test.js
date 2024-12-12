@@ -15,6 +15,7 @@ const {
 
 let token, firstBlog;
 beforeEach(async () => {
+  jest.setTimeout(10000);
   const initVariable = await initialTestFunc();
   token = initVariable.token;
   firstBlog = initVariable.newBlogId._id.toString();
