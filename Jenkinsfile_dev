@@ -65,6 +65,7 @@ pipeline {
 
         stage('Image push completed'){
             steps {
+                sh "docker compose down"
                 echo 'Completed...'
             }
         }
