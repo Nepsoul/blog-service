@@ -25,6 +25,7 @@ pipeline {
 
         stage('Run Application') {
             steps {
+            sh 'nohup npm run start:test &'
             sh 'npm run test'
             }
         }
