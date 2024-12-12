@@ -3,18 +3,18 @@ version: '3.8'
 services:
   # Backend service
   backend:
-    image: blog-api:latest  # Replace with your pre-built image name
-    container_name: backend
+    image: magarp0723/blog-service:latest  # Replace with your pre-built image name
+    container_name: blog-service
     ports:
-      - "3003:3003"        # Expose backend on port 3000
+      - "8081:3003"        # Expose backend on port 3000
     environment:
       - SECRET_KEY="appleisred"
       - PORT=3003
-      - MONGO_URL=mongodb://mongo:27017/myapp # MongoDB connection URI
+      - MONGO_URL=mongodb://mongo:27017/blogservice-testdb # MongoDB connection URI
       - NODE_ENV=dev # Node environment, change accordingly
     depends_on:
       - mongo               # Ensure mongo is started before the backend
-    command: ["npm","run","start:prod"]  # Start the app using npm start command (if not included in the image)
+    command: ["npm","run","start:dev"]  # Start the app using npm start command (if not included in the image)
     networks:
       - app-network          # Define the network to connect to
 

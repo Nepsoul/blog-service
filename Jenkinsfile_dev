@@ -48,7 +48,7 @@ pipeline {
                     docker stop temp_container
                     docker rm temp_container
                     docker build -t ${env.dockerhub_username}/${env.docker_image} .
-                    docker run -d -p 8081:3003 --name temp_container ${env.dockerhub_username}/${env.docker_image}
+                    docker-compose up -d
                     curl -I localhost:8081
                 '''
             }
