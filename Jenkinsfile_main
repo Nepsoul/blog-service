@@ -1,0 +1,48 @@
+pipeline {
+    agent any
+    environment {
+        TAG_DYNAMIC = "${env.GIT_BRANCH.replaceFirst('^origin/', '')}-${env.BUILD_ID}"
+        } 
+    stages {
+        stage('Cleanup') {
+            steps {
+                cleanWs()
+            }
+        }
+
+
+        stage('Pull image from Dockerhub') {
+            steps {
+                echo 'Building..'
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                        sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+                        sh "docker pull magarp0723/blog-service"
+                    }
+            }
+        }
+
+        stage('Create Container and Test'){
+            steps {
+                sh '''
+                    docker compose up -d
+                    echo "Container Up and Running..."
+                '''
+            }
+        }
+
+        stage('Deploy container into App server') {
+
+            steps {
+                sshagent(['ssh-key']) {
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+                        sh '''
+                            ssh -tt saroj@57.151.98.41 -o StrictHostKeyChecking=no "docker pull magarp0723/blog-service"
+                            ssh -tt saroj@57.151.98.41 -o StrictHostKeyChecking=no "docker compose up -d"
+                        '''
+                    }
+                }
+            }
+        }
+
+    }
+}
