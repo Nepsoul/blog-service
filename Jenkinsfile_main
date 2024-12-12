@@ -9,7 +9,11 @@ pipeline {
                 cleanWs()
             }
         }
-
+    stage('Clone Git Repo') {
+            steps {
+                checkout scm
+            }
+        }
 
         stage('Pull image from Dockerhub') {
             steps {
