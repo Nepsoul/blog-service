@@ -1,8 +1,12 @@
 pipeline {
     agent any
-    // environment {
-    //     TAG_DYNAMIC = "${env.GIT_BRANCH.replaceFirst('^origin/', '')}-${env.BUILD_ID}"
-    //     } 
+    
+    environment {
+        TAG_DYNAMIC = "${env.GIT_BRANCH.replaceFirst('^origin/', '')}-${env.BUILD_ID}"
+        PORT = credentials('3003')
+        MONGO_URL= credentials('mongodb+srv://prabeshmagarrumsan:mprabesh@cluster0.rbjux.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0')
+    } 
+       
     stages {
         stage('Cleanup') {
             steps {
