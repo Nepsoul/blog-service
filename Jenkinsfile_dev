@@ -1,0 +1,67 @@
+pipeline {
+    agent any
+    // environment {
+    //     TAG_DYNAMIC = "${env.GIT_BRANCH.replaceFirst('^origin/', '')}-${env.BUILD_ID}"
+    //     } 
+    stages {
+        stage('Cleanup') {
+            steps {
+                cleanWs()
+            }
+        }
+
+        stage('Clone Git Repo') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Install Dependencies') {
+            steps {
+            sh 'npm install'
+            }
+        }
+
+        stage('Run Application') {
+            steps {
+            sh 'npm run start:dev'
+            }
+        }
+
+        stage('Testing Completed') {
+            steps {
+                echo 'Testing Completed...'
+            }
+        }
+
+        // stage('Build Image') {
+        //     steps {
+        //         sh '''
+        //             docker stop temp_container
+        //             docker rm temp_container
+        //             docker build -t magarp0723/2244_ica2 .
+        //             docker run -d -p 8081:80 --name temp_container magarp0723/2244_ica2
+        //             curl -I localhost:8081
+        //         '''
+        //     }
+        // }
+
+        // stage('Push Image') {
+        //     steps {
+        //         echo 'Building..'
+        //             withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'PASSWORD', usernameVariable: 'USERNAME')]) {
+        //                 sh "docker login -u ${USERNAME} -p ${PASSWORD}"
+        //                 sh "docker tag magarp0723/2244_ica2 magarp0723/2244_ica2:${TAG_DYNAMIC}"
+        //                 sh "docker push magarp0723/2244_ica2:${TAG_DYNAMIC}"
+        //                 sh "docker push magarp0723/2244_ica2"
+        //             }
+        //     }
+        // }
+
+        stage('Image push completed'){
+            steps {
+                echo 'Completed...'
+            }
+        }
+ 
+    }
+}
