@@ -47,7 +47,7 @@ pipeline {
                 sh '''
                     docker build -t magarp0723/blog-service .
                     docker compose up -d
-                    curl -I localhost:8081
+                    curl localhost:8081
                 '''
             }
         }
