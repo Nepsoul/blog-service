@@ -26,6 +26,7 @@ pipeline {
         stage('Run Application') {
             steps {
             sh 'nohup npm run start:test &'
+            sh 'sleep 10' // wait for 10 seconds to ensure the application is ready
             sh 'npm run test'
             }
         }
