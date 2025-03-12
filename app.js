@@ -41,4 +41,4 @@ app.use(errorHandler);
 
 module.exports = app;
 
-console.log("hello");
+console.log("hello there");
